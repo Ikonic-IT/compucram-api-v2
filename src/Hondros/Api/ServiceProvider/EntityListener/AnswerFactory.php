@@ -2,8 +2,9 @@
 
 namespace Hondros\Api\ServiceProvider\EntityListener;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
+//use Laminas\ServiceManager\ServiceLocatorInterface;
 use Hondros\Api\Model\Listener;
 
 class AnswerFactory implements FactoryInterface
@@ -14,13 +15,13 @@ class AnswerFactory implements FactoryInterface
      * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return \Hondros\Api\Model\Listener\Answer
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new Listener\Answer(
-            $serviceLocator->get('config'),
-            $serviceLocator->get('redis'),
-            $serviceLocator->get('answerHydratorStrategy'),
-            $serviceLocator
+            $container->get('config'),
+            $container->get('redis'),
+            $container->get('answerHydratorStrategy'),
+            $container
         );
     }
 }

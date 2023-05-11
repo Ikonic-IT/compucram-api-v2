@@ -2,17 +2,18 @@
 
 namespace Hondros\Api\ServiceProvider\Adapter;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
+//use Laminas\ServiceManager\ServiceLocatorInterface;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 class MonologFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $logConfig = $serviceLocator->get('config')->log;
+        $logConfig = $container->get('config')->log;
         $logger = new Logger('logger');
         $logger->pushHandler(new StreamHandler($logConfig->file->path));
         
