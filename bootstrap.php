@@ -10,7 +10,7 @@ use JDesrosiers\Silex\Provider\CorsServiceProvider;
 use Knp\Provider\ConsoleServiceProvider;
 
 // init service manager
-$serviceManager = new \Laminas\ServiceManager\ServiceManager(require 'config/servicemanager.php');
+$serviceManager = new \Laminas\ServiceManager\ServiceManager(new \Laminas\ServiceManager\Config(require 'config/servicemanager.php'));
 $config = \Hondros\Api\Util\Config::init(defined('PHPUNIT') && PHPUNIT);
 $serviceManager->setService('config', $config);
 $serviceManager->setService('user', (new Hondros\Api\Model\Entity\User())

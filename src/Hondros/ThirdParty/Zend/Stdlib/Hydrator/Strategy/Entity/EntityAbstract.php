@@ -3,7 +3,7 @@
 namespace Hondros\ThirdParty\Zend\Stdlib\Hydrator\Strategy\Entity;
 
 use Laminas\Hydrator\HydratorInterface;
-use Laminas\Hydrator\Strategy\StrategyInterface;
+use Laminas\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class EntityAbstract
@@ -21,7 +21,7 @@ abstract class EntityAbstract implements StrategyInterface
      * @param mixed $properties
      * @return array|null
      */
-    public function extract($properties, ?object $object = null)
+    public function extract($properties)
     {
         if (empty($properties) || get_class($properties) == 'Doctrine\ORM\PersistentCollection' && !$properties->isInitialized()) {
             return null;
@@ -43,14 +43,14 @@ abstract class EntityAbstract implements StrategyInterface
      * @param mixed $data
      * @return mixed
      */
-    public function hydrate($value, ?array $data = null)
+    public function hydrate($data)
     {
 //         $name = substr(get_called_class(), strrpos(get_called_class(), '\\') + 1);
 //         $entityName = "\\Hondros\\Api\\Model\\Entity\\{$name}";
 
 //         return $this->hydrator->hydrate($data);
 
-        return $value;
+        return $data;
     }
 
     /**

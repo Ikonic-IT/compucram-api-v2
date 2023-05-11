@@ -2,7 +2,7 @@
 
 namespace Hondros\ThirdParty\Zend\Stdlib\Hydrator\Strategy;
 
-use Laminas\Hydrator\Strategy\StrategyInterface;
+use Laminas\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 class DateTime implements StrategyInterface
 {
@@ -12,7 +12,7 @@ class DateTime implements StrategyInterface
 
     }
     
-    public function extract($dateTime, ?object $object = null)
+    public function extract($dateTime)
     {
         if (empty($dateTime)) {
             return null;
@@ -21,7 +21,7 @@ class DateTime implements StrategyInterface
         return $dateTime->getTimestamp();
     }
 
-    public function hydrate($timestamp, ?array $data = null)
+    public function hydrate($timestamp)
     {
         if (empty($timestamp)) {
             return null;

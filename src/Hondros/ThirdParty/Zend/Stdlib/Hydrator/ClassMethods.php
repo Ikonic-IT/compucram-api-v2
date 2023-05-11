@@ -2,7 +2,7 @@
 
 namespace Hondros\ThirdParty\Zend\Stdlib\Hydrator;
 
-use Laminas\Hydrator\ClassMethodsHydrator as ZendClassMethods;
+use Laminas\Stdlib\Hydrator\ClassMethods as ZendClassMethods;
 
 class ClassMethods extends ZendClassMethods
 {
@@ -14,7 +14,7 @@ class ClassMethods extends ZendClassMethods
      * @param object $object
      * @return array
      */
-    public function extract(object $object): array
+    public function extract($object, $levels = 3, $loaded = [])
     {
         // track the hash of each object so we don't try and load it twice
         // to prevent a loop

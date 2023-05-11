@@ -4,9 +4,8 @@ namespace Hondros\Api\ServiceProvider\Adapter;
 
 use Hondros\ThirdParty\Doctrine\Common\Cache\QueryPredisCache;
 use Doctrine\Common\Cache\PredisCache;
-use Laminas\ServiceManager\Factory\FactoryInterface;
-use Interop\Container\ContainerInterface;
-//use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Configuration;
@@ -19,25 +18,25 @@ use Predis\Client as RedisClient;
 
 class DoctrineFactory implements FactoryInterface
 {
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $paths = array(realpath($container->get('config')->doctrine->paths->entity));
-        $proxyPath = $container->get('config')->doctrine->paths->proxy;
-        $isDevMode = $container->get('config')->environment == 'development' ? true : false;
+        $paths = array(realpath($serviceLocator->get('config')->doctrine->paths->entity));
+        $proxyPath = $serviceLocator->get('config')->doctrine->paths->proxy;
+        $isDevMode = $serviceLocator->get('config')->environment == 'development' ? true : false;
 
         $cacheAdapter = new ArrayCache();
         $queryAdapter = new ArrayCache();
 
         // change to a switch and see what type of cache we should enable based on server but allow the main ones
-        if ($container->get('config')->doctrine->cache->enabled) {
+        if ($serviceLocator->get('config')->doctrine->cache->enabled) {
             try {
                 $predis = new RedisClient(
-                    (array)$container->get('config')->redis->toArray(), 
-                    array('prefix' => $container->get('config')->doctrine->cache->prefix)
+                    (array)$serviceLocator->get('config')->redis->toArray(), 
+                    array('prefix' => $serviceLocator->get('config')->doctrine->cache->prefix)
                 );
                 $cacheAdapter = new PredisCache($predis);
                 $queryAdapter = new QueryPredisCache($predis);
-                $queryAdapter->setLifeTime($container->get('config')->doctrine->cache->queryLifeTime);
+                $queryAdapter->setLifeTime($serviceLocator->get('config')->doctrine->cache->queryLifeTime);
             } catch (\Exception $e) {
                 throw new \Exception("Redis connection failure " . $e->getMessage());
             }
@@ -54,18 +53,18 @@ class DoctrineFactory implements FactoryInterface
         $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver($paths, false));
 
         // register event listeners - even if we don't want to use them. They'll check inside if they need to do anything
-        foreach ($container->get('config')->doctrine->listeners as $key => $value) {
-            $listenerClass = $container->get($key);
+        foreach ($serviceLocator->get('config')->doctrine->listeners as $key => $value) {
+            $listenerClass = $serviceLocator->get($key);
             $config->getEntityListenerResolver()->register($listenerClass);
         }
 
-        $entityManager = EntityManager::create($container->get('config')->doctrine->params->toArray(), $config);
+        $entityManager = EntityManager::create($serviceLocator->get('config')->doctrine->params->toArray(), $config);
 
         // update to be based on config file
-        if ($container->get('config')->debug->queries) {
+        if ($serviceLocator->get('config')->debug->queries) {
             // setup log
             $chromeLogger = new ChromeSQLLogger();
-            $chromeLogger->setLog($container->get('logger'));
+            $chromeLogger->setLog($serviceLocator->get('logger'));
             $entityManager->getConnection()->getConfiguration()->setSQLLogger($chromeLogger);
         }
 

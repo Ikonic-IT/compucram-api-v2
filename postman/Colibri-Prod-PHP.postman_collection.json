@@ -624,145 +624,6 @@
 					"response": []
 				},
 				{
-					"name": "Get Enrollments-Prod Filter",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// jsonData will contain the valid JSON object from the response body\r",
-									"const jsonData = pm.response.json();\r",
-									"delete jsonData.page;\r",
-									"delete jsonData.pages;\r",
-									"delete jsonData.itemsPerPage;\r",
-									"delete jsonData.total;\r",
-									"delete jsonData.itemsCount;\r",
-									"// Variables and JSON Keys are case sensitive!\r",
-									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));\r",
-									"\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{baseurl_prod}}/enrollments?filters[0][property]=examId&filters[0][value]=7&filters[0][condition]=eq&orderBy[0][property]=created&orderBy[0][value]=desc&token={{token_prod}}",
-							"host": [
-								"{{baseurl_prod}}"
-							],
-							"path": [
-								"enrollments"
-							],
-							"query": [
-								{
-									"key": "filters[0][property]",
-									"value": "examId"
-								},
-								{
-									"key": "filters[0][value]",
-									"value": "7"
-								},
-								{
-									"key": "filters[0][condition]",
-									"value": "eq"
-								},
-								{
-									"key": "orderBy[0][property]",
-									"value": "created"
-								},
-								{
-									"key": "orderBy[0][value]",
-									"value": "desc"
-								},
-								{
-									"key": "token",
-									"value": "{{token_prod}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Enrollments-Dev Filter",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
-									"const responseB = pm.response.json();\r",
-									"delete responseB.page;\r",
-									"delete responseB.pages;\r",
-									"delete responseB.itemsPerPage;\r",
-									"delete responseB.total;\r",
-									"delete responseB.itemsCount;\r",
-									"pm.test(\"Compare responses\", function () {\r",
-									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
-									"});\r",
-									"pm.collectionVariables.unset(\"responseA\");\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"url": {
-							"raw": "{{baseurl_dev}}/enrollments?filters[0][property]=examId&filters[0][value]=7&filters[0][condition]=eq&orderBy[0][property]=created&orderBy[0][value]=desc&token={{token_dev}}",
-							"host": [
-								"{{baseurl_dev}}"
-							],
-							"path": [
-								"enrollments"
-							],
-							"query": [
-								{
-									"key": "filters[0][property]",
-									"value": "examId"
-								},
-								{
-									"key": "filters[0][value]",
-									"value": "7"
-								},
-								{
-									"key": "filters[0][condition]",
-									"value": "eq"
-								},
-								{
-									"key": "orderBy[0][property]",
-									"value": "created"
-								},
-								{
-									"key": "orderBy[0][value]",
-									"value": "desc"
-								},
-								{
-									"key": "token",
-									"value": "{{token_dev}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Get Enrollment by id-Prod",
 					"event": [
 						{
@@ -1869,7 +1730,6 @@
 									"// jsonData will contain the valid JSON object from the response body\r",
 									"const jsonData = pm.response.json();\r",
 									"delete jsonData.item[\"modified\"];\r",
-									"delete jsonData.item[\"expiration\"];\r",
 									"// Variables and JSON Keys are case sensitive!\r",
 									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));"
 								],
@@ -1924,7 +1784,6 @@
 									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
 									"const responseB = pm.response.json();\r",
 									"delete responseB.item[\"modified\"];\r",
-									"delete responseB.item[\"expiration\"];\r",
 									"pm.test(\"Compare responses\", function () {\r",
 									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
 									"});\r",
@@ -2452,104 +2311,6 @@
 					"response": []
 				},
 				{
-					"name": "CREATE Pending enrollments - Prod",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// jsonData will contain the valid JSON object from the response body\r",
-									"const jsonData = pm.response.json();\r",
-									"\r",
-									"// Variables and JSON Keys are case sensitive!\r",
-									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));\r",
-									"\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": 13468,\r\n    \"email\": \"IkonicTest@gmail.com\",\r\n    \"firstName\": \"Cody\",\r\n    \"lastName\": \"Mcclintock\",\r\n    \"productIds\":1052\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseurl_dev}}/pending-enrollments?token={{token_dev}}",
-							"host": [
-								"{{baseurl_dev}}"
-							],
-							"path": [
-								"pending-enrollments"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token_dev}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CREATE Pending enrollments - Dev",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
-									"const responseB = pm.response.json();\r",
-									"\r",
-									"pm.test(\"Compare responses\", function () {\r",
-									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
-									"});\r",
-									"pm.collectionVariables.unset(\"responseA\");"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": 13468,\r\n    \"email\": \"IkonicTest@gmail.com\",\r\n    \"firstName\": \"Cody\",\r\n    \"lastName\": \"Mcclintock\",\r\n    \"productIds\":1052\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseurl_prod}}/pending-enrollments?token={{token_prod}}",
-							"host": [
-								"{{baseurl_prod}}"
-							],
-							"path": [
-								"pending-enrollments"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token_prod}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Disable Enrollment By ID-Prod",
 					"event": [
 						{
@@ -2559,7 +2320,6 @@
 									"// jsonData will contain the valid JSON object from the response body\r",
 									"const jsonData = pm.response.json();\r",
 									"delete jsonData.item[\"modified\"];\r",
-									"delete jsonData.item[\"expiration\"];\r",
 									"// Variables and JSON Keys are case sensitive!\r",
 									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));\r",
 									"\r",
@@ -2617,7 +2377,6 @@
 									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
 									"const responseB = pm.response.json();\r",
 									"delete responseB.item[\"modified\"];\r",
-									"delete responseB.item[\"expiration\"];\r",
 									"pm.test(\"Compare responses\", function () {\r",
 									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
 									"});\r",
@@ -2676,7 +2435,6 @@
 									"// jsonData will contain the valid JSON object from the response body\r",
 									"const jsonData = pm.response.json();\r",
 									"delete jsonData.item[\"modified\"];\r",
-									"delete jsonData.item[\"expiration\"];\r",
 									"// Variables and JSON Keys are case sensitive!\r",
 									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));\r",
 									"\r",
@@ -2734,7 +2492,6 @@
 									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
 									"const responseB = pm.response.json();\r",
 									"delete responseB.item[\"modified\"];\r",
-									"delete responseB.item[\"expiration\"];\r",
 									"pm.test(\"Compare responses\", function () {\r",
 									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
 									"});\r",
@@ -2917,7 +2674,6 @@
 									"delete jsonData.item[\"id\"];\r",
 									"delete jsonData.item[\"created\"];\r",
 									"delete jsonData.item.enrollment[\"modified\"];\r",
-									"delete jsonData.item.enrollment[\"expiration\"];\r",
 									"// Variables and JSON Keys are case sensitive!\r",
 									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));"
 								],
@@ -2982,7 +2738,6 @@
 									"delete responseB.item[\"id\"];\r",
 									"delete responseB.item[\"created\"];\r",
 									"delete responseB.item.enrollment[\"modified\"];\r",
-									"delete responseB.item.enrollment[\"expiration\"];\r",
 									"pm.test(\"Compare responses\", function () {\r",
 									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
 									"});\r",
@@ -3862,19 +3617,7 @@
 								"exec": [
 									"// jsonData will contain the valid JSON object from the response body\r",
 									"const jsonData = pm.response.json();\r",
-									"const items= jsonData.items;\r",
 									"\r",
-									"for (const [reqKey, reqValue] of Object.entries(items)) {\r",
-									" const answers =   reqValue.answers\r",
-									"   delete reqValue[\"created\"];\r",
-									"   delete reqValue[\"modified\"];\r",
-									" for (const [key, value] of Object.entries(answers)) {\r",
-									"   delete value[\"created\"];\r",
-									"   delete value[\"modified\"];\r",
-									"   delete value[\"question\"];\r",
-									" }\r",
-									"\r",
-									"}\r",
 									"// Variables and JSON Keys are case sensitive!\r",
 									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));"
 								],
@@ -3927,19 +3670,6 @@
 									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
 									"const responseB = pm.response.json();\r",
 									"\r",
-									"const items= responseB.items;\r",
-									"\r",
-									"for (const [reqKey, reqValue] of Object.entries(items)) {\r",
-									" const answers =   reqValue.answers\r",
-									"   delete reqValue[\"created\"];\r",
-									"   delete reqValue[\"modified\"];\r",
-									" for (const [key, value] of Object.entries(answers)) {\r",
-									"   delete value[\"created\"];\r",
-									"   delete value[\"modified\"];\r",
-									"   delete value[\"question\"];\r",
-									" }\r",
-									"\r",
-									"}\r",
 									"pm.test(\"Compare responses\", function () {\r",
 									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
 									"});\r",
@@ -4205,9 +3935,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "file",
+									"key": "",
 									"type": "file",
-									"src": "RAMRPTest.xlsx"
+									"src": "4h3Di9iQq/RAMRPTest.xlsx"
 								}
 							]
 						},
@@ -4256,9 +3986,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "file",
+									"key": "",
 									"type": "file",
-									"src": "RAMRPTest.xlsx"
+									"src": "4h3Di9iQq/RAMRPTest.xlsx"
 								}
 							]
 						},
@@ -4686,13 +4416,6 @@
 									"// jsonData will contain the valid JSON object from the response body\r",
 									"const jsonData = pm.response.json();\r",
 									"\r",
-									"const items= jsonData.items;\r",
-									"//console.log(\"==items=\"+items);\r",
-									"for (const [reqKey, reqValue] of Object.entries(items)) {\r",
-									" delete reqValue[\"modified\"];\r",
-									"\r",
-									"}\r",
-									"\r",
 									"// Variables and JSON Keys are case sensitive!\r",
 									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));"
 								],
@@ -4747,13 +4470,6 @@
 								"exec": [
 									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
 									"const responseB = pm.response.json();\r",
-									"\r",
-									"const items= responseB.items;\r",
-									"//console.log(\"==items=\"+items);\r",
-									"for (const [reqKey, reqValue] of Object.entries(items)) {\r",
-									" delete reqValue[\"modified\"];\r",
-									"\r",
-									"}\r",
 									"\r",
 									"pm.test(\"Compare responses\", function () {\r",
 									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
@@ -5780,7 +5496,7 @@
 					"response": []
 				},
 				{
-					"name": "Exams by Code - Dev",
+					"name": "Exams by Code - Dev Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -6564,9 +6280,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "file",
+									"key": "",
 									"type": "file",
-									"src": "RESAMP0Test.xlsx"
+									"src": "588xYK68U/RESAMP0Test.xlsx"
 								}
 							]
 						},
@@ -6598,7 +6314,6 @@
 								"exec": [
 									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
 									"const responseB = pm.response.json();\r",
-									"\r",
 									"pm.test(\"Compare responses\", function () {\r",
 									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
 									"});\r",
@@ -6616,9 +6331,9 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "file",
+									"key": "",
 									"type": "file",
-									"src": "RESAMP0Test.xlsx"
+									"src": "588xYK68U/RESAMP0Test.xlsx"
 								}
 							]
 						},
@@ -6793,7 +6508,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseurl_prod}}/assessment-attempts/:assessment-attemptID/question-attempts?includes[]=assessmentAttempt&includes[]=question&includes[]=module&token={{token_prod}}",
+							"raw": "{{baseurl_prod}}/assessment-attempts/:assessment-attemptID/question-attempts?token={{token_prod}}&includes[]=assessmentAttempt",
 							"host": [
 								"{{baseurl_prod}}"
 							],
@@ -6804,20 +6519,12 @@
 							],
 							"query": [
 								{
-									"key": "includes[]",
-									"value": "assessmentAttempt"
-								},
-								{
-									"key": "includes[]",
-									"value": "question"
-								},
-								{
-									"key": "includes[]",
-									"value": "module"
-								},
-								{
 									"key": "token",
 									"value": "{{token_prod}}"
+								},
+								{
+									"key": "includes[]",
+									"value": "assessmentAttempt"
 								}
 							],
 							"variable": [
@@ -6853,7 +6560,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseurl_dev}}/assessment-attempts/:assessment-attemptID/question-attempts?includes[]=assessmentAttempt&includes[]=question&includes[]=module&token={{token_dev}}",
+							"raw": "{{baseurl_dev}}/assessment-attempts/:assessment-attemptID/question-attempts?token={{token_dev}}&includes[]=assessmentAttempt",
 							"host": [
 								"{{baseurl_dev}}"
 							],
@@ -6864,20 +6571,12 @@
 							],
 							"query": [
 								{
-									"key": "includes[]",
-									"value": "assessmentAttempt"
-								},
-								{
-									"key": "includes[]",
-									"value": "question"
-								},
-								{
-									"key": "includes[]",
-									"value": "module"
-								},
-								{
 									"key": "token",
 									"value": "{{token_dev}}"
+								},
+								{
+									"key": "includes[]",
+									"value": "assessmentAttempt"
 								}
 							],
 							"variable": [
@@ -7174,7 +6873,7 @@
 							"variable": [
 								{
 									"key": "assessment-attemptID",
-									"value": "1973723"
+									"value": null
 								}
 							]
 						}
@@ -7761,114 +7460,6 @@
 					"response": []
 				},
 				{
-					"name": "Question-ID - Prod Filter",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// jsonData will contain the valid JSON object from the response body\r",
-									"const jsonData = pm.response.json();\r",
-									"\r",
-									"// Variables and JSON Keys are case sensitive!\r",
-									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseurl_prod}}/questions/:questionID?includes[]=questionBank&includes[]=answers&token={{token_prod}}",
-							"host": [
-								"{{baseurl_prod}}"
-							],
-							"path": [
-								"questions",
-								":questionID"
-							],
-							"query": [
-								{
-									"key": "includes[]",
-									"value": "questionBank"
-								},
-								{
-									"key": "includes[]",
-									"value": "answers"
-								},
-								{
-									"key": "token",
-									"value": "{{token_prod}}"
-								}
-							],
-							"variable": [
-								{
-									"key": "questionID",
-									"value": "12260"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Question-ID - Dev Filter",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
-									"const responseB = pm.response.json();\r",
-									"\r",
-									"pm.test(\"Compare responses\", function () {\r",
-									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
-									"});\r",
-									"pm.collectionVariables.unset(\"responseA\");"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseurl_dev}}/questions/:questionID?includes[]=questionBank&includes[]=answers&token={{token_dev}}",
-							"host": [
-								"{{baseurl_dev}}"
-							],
-							"path": [
-								"questions",
-								":questionID"
-							],
-							"query": [
-								{
-									"key": "includes[]",
-									"value": "questionBank"
-								},
-								{
-									"key": "includes[]",
-									"value": "answers"
-								},
-								{
-									"key": "token",
-									"value": "{{token_dev}}"
-								}
-							],
-							"variable": [
-								{
-									"key": "questionID",
-									"value": "12260"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "PUT Question-ID - Prod",
 					"event": [
 						{
@@ -8017,7 +7608,7 @@
 							"variable": [
 								{
 									"key": "questionID",
-									"value": "15715"
+									"value": "12260"
 								}
 							]
 						}
@@ -8065,7 +7656,7 @@
 							"variable": [
 								{
 									"key": "questionID",
-									"value": "15715"
+									"value": "12260"
 								}
 							]
 						}
@@ -8112,7 +7703,7 @@
 							"variable": [
 								{
 									"key": "questionID",
-									"value": "15715"
+									"value": "12260"
 								}
 							]
 						}
@@ -8161,7 +7752,7 @@
 							"variable": [
 								{
 									"key": "questionID",
-									"value": "15715"
+									"value": "12260"
 								}
 							]
 						}
@@ -8181,6 +7772,8 @@
 									"delete jsonData.items[0][\"modifiedById\"];\r",
 									"delete jsonData.items[0][\"modified\"];\r",
 									"\r",
+									"console.log(\"=jsonData1==\"+jsonData);\r",
+									"\r",
 									"const answers = jsonData.items[0][\"answers\"];\r",
 									"for (let i = 0; i < answers.length; i++) {\r",
 									"delete jsonData.items[0][\"answers\"][i][\"created\"];\r",
@@ -8188,6 +7781,7 @@
 									"delete jsonData.items[0][\"answers\"][i][\"modified\"];\r",
 									"}\r",
 									"\r",
+									"console.log(\"=jsonData==\"+jsonData);\r",
 									"// Variables and JSON Keys are case sensitive!\r",
 									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));\r",
 									"\r",
@@ -9779,112 +9373,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Create users - Prod",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// jsonData will contain the valid JSON object from the response body\r",
-									"const jsonData = pm.response.json();\r",
-									"\r",
-									"delete jsonData.item[\"id\"];\r",
-									"delete jsonData.item[\"token\"];\r",
-									"delete jsonData.item[\"created\"];\r",
-									"delete jsonData.item[\"modified\"];\r",
-									"\r",
-									"// Variables and JSON Keys are case sensitive!\r",
-									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"joey1235@joey.com\",\r\n  \"password\": \"some123!#asdf\",\r\n  \"firstName\": \"test\",\r\n  \"lastName\": \"user\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseurl_prod}}/users?token={{token_prod}}",
-							"host": [
-								"{{baseurl_prod}}"
-							],
-							"path": [
-								"users"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token_prod}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create users - DEV",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
-									"const responseB = pm.response.json();\r",
-									"\r",
-									"delete responseB.item[\"id\"];\r",
-									"delete responseB.item[\"token\"];\r",
-									"delete responseB.item[\"created\"];\r",
-									"delete responseB.item[\"modified\"];\r",
-									"\r",
-									"pm.test(\"Compare responses\", function () {\r",
-									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
-									"});\r",
-									"pm.collectionVariables.unset(\"responseA\");"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"joey1235@joey.com\",\r\n  \"password\": \"some123!#asdf\",\r\n  \"firstName\": \"test\",\r\n  \"lastName\": \"user\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseurl_dev}}/users?token={{token_dev}}",
-							"host": [
-								"{{baseurl_dev}}"
-							],
-							"path": [
-								"users"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token_dev}}"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -10782,106 +10270,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Create organizations - Prod",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// jsonData will contain the valid JSON object from the response body\r",
-									"const jsonData = pm.response.json();\r",
-									"\r",
-									"delete jsonData.item[\"modified\"];\r",
-									"delete jsonData.item[\"created\"];\r",
-									"// Variables and JSON Keys are case sensitive!\r",
-									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"a test124\",\r\n  \"credits\": 100,\r\n  \"parentId\": 1000\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseurl_prod}}/organizations?token={{token_prod}}",
-							"host": [
-								"{{baseurl_prod}}"
-							],
-							"path": [
-								"organizations"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token_prod}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create organizations - DEV",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
-									"const responseB = pm.response.json();\r",
-									"\r",
-									"delete responseB.item[\"modified\"];\r",
-									"delete responseB.item[\"created\"];\r",
-									"pm.test(\"Compare responses\", function () {\r",
-									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
-									"});\r",
-									"pm.collectionVariables.unset(\"responseA\");"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"a test124\",\r\n  \"credits\": 100,\r\n  \"parentId\": 1000\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseurl_dev}}/organizations?token={{token_dev}}",
-							"host": [
-								"{{baseurl_dev}}"
-							],
-							"path": [
-								"organizations"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "{{token_dev}}"
-								}
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -11427,26 +10815,6 @@
 			"item": [
 				{
 					"name": "Update Answer - Prod",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"// jsonData will contain the valid JSON object from the response body\r",
-									"const jsonData = pm.response.json();\r",
-									"const items= jsonData.items;\r",
-									"//console.log(\"==items=\"+items);\r",
-									"for (const [reqKey, reqValue] of Object.entries(items)) {\r",
-									"    delete reqValue[\"modified\"];\r",
-									"}\r",
-									"\r",
-									"// Variables and JSON Keys are case sensitive!\r",
-									"pm.collectionVariables.set(\"responseA\", JSON.stringify(jsonData));"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -11479,29 +10847,6 @@
 				},
 				{
 					"name": "Update Answer - DEV",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const responseA = pm.collectionVariables.get(\"responseA\");\r",
-									"const responseB = pm.response.json();\r",
-									"const items= responseB.items;\r",
-									"//console.log(\"==items=\"+items);\r",
-									"for (const [reqKey, reqValue] of Object.entries(items)) {\r",
-									"    delete reqValue[\"modified\"];\r",
-									"}\r",
-									"pm.test(\"Compare responses\", function () {\r",
-									"    pm.expect(responseA).to.equal(JSON.stringify(responseB));\r",
-									"});\r",
-									"pm.collectionVariables.unset(\"responseA\");\r",
-									"\r",
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -11591,10 +10936,6 @@
 			"key": "Updatecode_dev",
 			"value": "",
 			"type": "string"
-		},
-		{
-			"key": "responseA",
-			"value": ""
 		}
 	]
 }

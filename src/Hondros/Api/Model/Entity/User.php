@@ -3,10 +3,10 @@
 namespace Hondros\Api\Model\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Laminas\Filter\FilterProviderInterface;
-use Laminas\Filter\MethodMatchFilter;
-use Laminas\Filter\GetFilter;
-use Laminas\Filter\FilterComposite;
+use Laminas\Stdlib\Hydrator\Filter\FilterProviderInterface;
+use Laminas\Stdlib\Hydrator\Filter\MethodMatchFilter;
+use Laminas\Stdlib\Hydrator\Filter\GetFilter;
+use Laminas\Stdlib\Hydrator\Filter\FilterComposite;
 
 /**
  * User
@@ -371,7 +371,7 @@ class User implements FilterProviderInterface
      *
      * @return FilterInterface
      */
-    public function getFilterConfig()
+    public function getFilter()
     {
         $composite = new FilterComposite();
         $composite->addFilter("get", new GetFilter());
@@ -388,5 +388,4 @@ class User implements FilterProviderInterface
     
         return $composite;
     }
-    
 }
