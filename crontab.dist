@@ -1,0 +1,11 @@
+*/2 * * * * /usr/bin/php /var/www/api/console.php progress:recalculate >/dev/null 2>&1
+*/2 * * * * /usr/bin/php /var/www/api/console.php progress:addQuestion >/dev/null 2>&1
+
+*/2 * * * * /usr/bin/php /var/www/api/console.php moduleQuestion:addedNew >/dev/null 2>&1
+
+*/2 * * * * /usr/bin/php /var/www/api/console.php question:statusChange >/dev/null 2>&1
+*/2 * * * * /usr/bin/php /var/www/api/console.php question:addToElasticsearch >/dev/null 2>&1
+
+*/2 * * * * /usr/bin/php /var/www/api/console.php moduleAttempt:recalculate >/dev/null 2>&1
+
+0 3 * * * /usr/bin/php /var/www/api/console.php report:totalStats >/dev/null 2>&1

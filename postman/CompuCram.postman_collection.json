@@ -1,0 +1,807 @@
+{
+	"info": {
+		"_postman_id": "667dc135-fe54-4fce-8b8b-d25a5d0daf0e",
+		"name": "CompuCram",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "_token",
+			"item": [
+				{
+					"name": "get token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code === 200;\r",
+									"\r",
+									"postman.clearEnvironmentVariable(\"bearer\");\r",
+									"\r",
+									"var data = JSON.parse(responseBody);\r",
+									"\r",
+									"postman.setEnvironmentVariable(\"bearer\", data.item.token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "get users by email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users?token={{bearer}}&filters[0][property]=email&filters[0][value]=hondros&filters[0][condition]=like&orderBy[0][property]=created&orderBy[0][value]=desc&pageSize=5000&page=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								},
+								{
+									"key": "filters[0][property]",
+									"value": "email"
+								},
+								{
+									"key": "filters[0][value]",
+									"value": "hondros"
+								},
+								{
+									"key": "filters[0][condition]",
+									"value": "like"
+								},
+								{
+									"key": "orderBy[0][property]",
+									"value": "created"
+								},
+								{
+									"key": "orderBy[0][value]",
+									"value": "desc"
+								},
+								{
+									"key": "pageSize",
+									"value": "5000"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user enrollments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/{{userId}}/enrollments?includes[]=progresses&token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}",
+								"enrollments"
+							],
+							"query": [
+								{
+									"key": "includes[]",
+									"value": "progresses"
+								},
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "exam",
+			"item": [
+				{
+					"name": "get all exams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/exams?token={{bearer}}&pageSize=443",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exams"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								},
+								{
+									"key": "pageSize",
+									"value": "443"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get exam by code",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/exams/RESPSINJ0215?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exams",
+								"RESPSINJ0215"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get exam by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/exams/7?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exams",
+								"7"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get exam modules",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/exams/7/modules?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"exams",
+								"7",
+								"modules"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "organization",
+			"item": [
+				{
+					"name": "get all organizations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/organizations?token={{bearer}}&pageSize=137",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"organizations"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								},
+								{
+									"key": "pageSize",
+									"value": "137"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "student",
+			"item": [
+				{
+					"name": "get readinesscore",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/student/{{userId}}/enrollments/{{enrollmentId}}/readinessscore?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"{{userId}}",
+								"enrollments",
+								"{{enrollmentId}}",
+								"readinessscore"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get scorecardmetrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/student/{{userId}}/enrollments/{{enrollmentId}}/scorecardmetrics?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"{{userId}}",
+								"enrollments",
+								"{{enrollmentId}}",
+								"scorecardmetrics"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get scorecardmetrics 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/student/{{userId2}}/enrollments/{{enrollmentId2}}/scorecardmetrics?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"{{userId2}}",
+								"enrollments",
+								"{{enrollmentId2}}",
+								"scorecardmetrics"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get student scorecardmetrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/student/{{userId}}/scorecardmetrics?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"{{userId}}",
+								"scorecardmetrics"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get readiness student scorecardmetrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/student/{{readinessUserId}}/scorecardmetrics?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"{{readinessUserId}}",
+								"scorecardmetrics"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "enrollment",
+			"item": [
+				{
+					"name": "add enrollment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\" : 111290,\r\n    \"examId\" : 143,   \r\n    \"organizationId\" : 1125\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/enrollments?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"enrollments"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get enrollment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/enrollments/{{enrollmentId}}?includes[]=user&token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"enrollments",
+								"{{enrollmentId}}"
+							],
+							"query": [
+								{
+									"key": "includes[]",
+									"value": "user"
+								},
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get enrollment with progresses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/enrollments/119238?includes[]=user&includes[]=progresses&token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"enrollments",
+								"119238"
+							],
+							"query": [
+								{
+									"key": "includes[]",
+									"value": "user"
+								},
+								{
+									"key": "includes[]",
+									"value": "progresses"
+								},
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "search",
+			"item": [
+				{
+					"name": "search question by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"match\": {\r\n            \"_id\": {{questionId}}\r\n        }\r\n    },\r\n    \"page\": 1,\r\n    \"size\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/search?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"search"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search question by match",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"bool\": {\r\n            \"should\": [\r\n                { \"match\": { \"questionText\": {{matchValue}} }},\r\n                { \"match\": { \"feedback\": {{matchValue}} }},\r\n                { \"match\": { \"answer1\": {{matchValue}} }},\r\n                { \"match\": { \"answer2\": {{matchValue}} }},\r\n                { \"match\": { \"answer3\": {{matchValue}} }},\r\n                { \"match\": { \"answer4\": {{matchValue}} }}\r\n            ]\r\n        }\r\n    },\r\n    \"page\": 1,\r\n    \"size\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/search?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"search"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search question by simple query 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"simple_query_string\": {\r\n            \"query\": \"\\\"mortgage loan\\\" +(offer | term) +APR -exceed\",\r\n            \"fields\": [\"questionText\", \"feedback\", \"answer1\", \"answer2\", \"answer3\", \"answer4\"],\r\n            \"default_operator\": \"and\"\r\n        }\r\n    },\r\n    \"page\": 1,\r\n    \"size\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/search?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"search"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search question by simple query 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"simple_query_string\": {\r\n            \"query\": \"secondary market -corporation +fund clie*\",\r\n            \"fields\": [\"questionText^3\", \"feedback\", \"answer*\"],\r\n            \"default_operator\": \"and\"\r\n        }\r\n    },\r\n    \"page\": 1,\r\n    \"size\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/search?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"search"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search question by simple query 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"query\": {\r\n        \"simple_query_string\": {\r\n            \"query\": \"clie*\",\r\n            \"fields\": [\"questionText^3\", \"feedback\", \"answer*\"],\r\n            \"default_operator\": \"and\"\r\n        }\r\n    },\r\n    \"page\": 1,\r\n    \"size\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/questions/search?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"questions",
+								"search"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "archived",
+			"item": [
+				{
+					"name": "get assessmentattempts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/student/{{userId}}/enrollments/{{enrollmentId}}/assessmentattempts?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"{{userId}}",
+								"enrollments",
+								"{{enrollmentId}}",
+								"assessmentattempts"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get attemptscore new",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/student/{{userId}}/enrollments/{{enrollmentId}}/assessment/542251/attemptscore?token={{bearer}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"student",
+								"{{userId}}",
+								"enrollments",
+								"{{enrollmentId}}",
+								"assessment",
+								"542251",
+								"attemptscore"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{bearer}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

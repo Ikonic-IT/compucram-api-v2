@@ -1,0 +1,32 @@
+<phpunit bootstrap="tests/bootstrap.php"
+         stopOnError="true"
+         stopOnFailure="true"
+         backupGlobals="false"
+         colors="true">
+    <testsuites>
+        <testsuite name="unit">
+            <directory>./tests/unit</directory>
+        </testsuite>
+
+        <testsuite name="functional">
+            <directory>./tests/functional</directory>
+        </testsuite>
+
+        <testsuite name="integration">
+            <directory>./tests/integration</directory>
+        </testsuite>
+    </testsuites>
+  
+    <!--<logging>
+        <log type="coverage-text" target="php://stdout" charset="UTF-8" highlight="true" lowUpperBound="70" highLowerBound="90"/>
+    </logging>-->
+    
+    <filter>
+        <whitelist>
+            <directory>./src/Hondros</directory>
+            <exclude>
+                <!--<directory></directory>-->
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

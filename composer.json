@@ -1,0 +1,58 @@
+{
+    "name": "joeyrivera/hondros-api",
+    "description": "Hondros API",
+    "keywords": [
+        "hondros",
+        "api"
+    ],
+    "type": "library",
+    "homepage": "https://bitbucket.org/hondros/api",
+    "license": "",
+    "authors": [
+        {
+            "name": "Joey Rivera",
+            "homepage": "http://www.joeyrivera.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/Hondros/OverrideVendor/AbstractHydrator.php"
+        ],
+        "psr-4": {
+            "Hondros\\": "src/Hondros/"
+        }
+    },
+    "require": {
+        "silex/silex": "^2.0",
+        "jdesrosiers/silex-cors-provider": "^1.6",
+        "doctrine/orm": "^2.7",
+        "doctrine/dbal": "^2.7",
+        "doctrine/cache": "^1.11",
+        "doctrine/doctrine-bundle": "^2.2",
+        "laminas/laminas-dependency-plugin": "^2.2",
+        "guzzlehttp/guzzle": "^7.5",
+        "monolog/monolog": "^3.3",
+        "predis/predis": "^2.1",
+        "phpoffice/phpspreadsheet": "^1.28",
+        "php-amqplib/php-amqplib": "^3.5",
+        "elasticsearch/elasticsearch": "^7.17",
+        "knplabs/console-service-provider": "^2.2",
+        "aws/aws-sdk-php": "^3.269",
+        "laminas/laminas-servicemanager": "^3.20",
+        "laminas/laminas-config": "^3.8",
+        "laminas/laminas-filter": "^2.31",
+        "laminas/laminas-permissions-rbac": "^3.5",
+        "laminas/laminas-hydrator": "^4.13",
+        "laminas/laminas-stdlib": "^3.17"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.1",
+        "phpunit/dbunit": "*",
+        "mockery/mockery": "^1.5"
+    },
+    "config": {
+        "allow-plugins": {
+            "laminas/laminas-dependency-plugin": false
+        }
+    }
+}

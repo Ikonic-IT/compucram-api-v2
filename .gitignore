@@ -1,0 +1,20 @@
+vendor/
+logs/
+.buildpath
+.settings/
+.project
+.phpunit.result.cache
+db/compucram platform.mwb.bak
+src/Hondros/Api/Model/Proxy
+config/local.php
+config/phpunit.php
+composer.phar
+.DS_Store
+.idea/
+content/import
+nohup.out
+crontab
+tmp
+public/content/export
+db/backup
+.vscode/
