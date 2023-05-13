@@ -4,9 +4,13 @@ namespace Hondros\Api\Model\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Laminas\Filter\FilterProviderInterface;
-use Laminas\Filter\MethodMatchFilter;
-use Laminas\Filter\GetFilter;
-use Laminas\Filter\FilterComposite;
+//use Laminas\Filter\MethodMatchFilter;
+//use Laminas\Filter\GetFilter;
+
+//use Laminas\Filter\FilterComposite;
+use Laminas\Hydrator\Filter\MethodMatchFilter;
+use Laminas\Hydrator\Filter\GetFilter;
+use Laminas\Hydrator\Filter\FilterComposite;
 
 /**
  * User

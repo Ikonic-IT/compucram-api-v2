@@ -31,13 +31,16 @@ class UserFactory implements FactoryInterface
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         
-        new Service\User(
-            $container->get('entityManager'),
+        
+        return new Service\User($container->get('entityManager'),
             $container->get('logger'),
             $container->get('userRepository'),
             $container->get('config'),
             $container->get('redis'),
-            $container->get('user')
-        );
+            $container->get('user'));
+    }
+    public function createService(ServiceLocatorInterface $services)
+    {
+        return $this($services);
     }
 }

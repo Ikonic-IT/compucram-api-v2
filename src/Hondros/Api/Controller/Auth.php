@@ -33,7 +33,9 @@ class Auth implements ControllerProviderInterface
         
         $controllers->post('/auth/login', function () {
             $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
+
             $password = !empty($_POST['password']) ? trim($_POST['password']) : null;
+        
             $remember = !empty($_POST['remember']) ? $_POST['remember'] : false;
             
             return JsonResponse::create($this->serviceManager->get('userService')->login($email, $password, $remember));

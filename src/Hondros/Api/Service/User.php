@@ -78,6 +78,7 @@ class User extends ServiceAbstract
      */
     public function login($email, $password, $remember = false)
     {
+        
         $user = $this->repository->findOneBy(['email' => $email]);
         
         if (empty($user)) {
