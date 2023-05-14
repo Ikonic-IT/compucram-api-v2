@@ -2,10 +2,10 @@
 
 namespace Hondros\Api\ServiceProvider\Repository;
 
-use Laminas\ServiceManager\Factory\FactoryInterface;
-use Interop\Container\ContainerInterface;
-//use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Hondros\Api\Model\Repository;
+use Interop\Container\ContainerInterface;
 
 class UserFactory implements FactoryInterface
 {
@@ -27,5 +27,10 @@ class UserFactory implements FactoryInterface
             $container->get('config'),
             $container->get('userHydratorStrategy')
         );
+    }
+
+    public function createService(ServiceLocatorInterface $services)
+    {
+        return $this($services);
     }
 }

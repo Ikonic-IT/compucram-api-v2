@@ -2,9 +2,11 @@
 
 namespace Hondros\Api\ServiceProvider\Service;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+// use Laminas\ServiceManager\FactoryInterface;
+// use Laminas\ServiceManager\ServiceLocatorInterface;
 use Hondros\Api\Service;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 class EnrollmentFactory implements FactoryInterface
 {
@@ -14,19 +16,23 @@ class EnrollmentFactory implements FactoryInterface
      * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return \Hondros\Api\Service\Enrollment
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new Service\Enrollment(
-            $serviceLocator->get('entityManager'),
-            $serviceLocator->get('logger'),
-            $serviceLocator->get('enrollmentRepository'),
-            $serviceLocator->get('config'),
-            $serviceLocator->get('examRepository'),
-            $serviceLocator->get('moduleRepository'),
-            $serviceLocator->get('questionRepository'),
-            $serviceLocator->get('userRepository'),
-            $serviceLocator->get('organizationRepository'),
-            $serviceLocator->get('mailChimpClient')
+            $container->get('entityManager'),
+            $container->get('logger'),
+            $container->get('enrollmentRepository'),
+            $container->get('config'),
+            $container->get('examRepository'),
+            $container->get('moduleRepository'),
+            $container->get('questionRepository'),
+            $container->get('userRepository'),
+            $container->get('organizationRepository'),
+            $container->get('mailChimpClient')
         );
+    }
+    public function createService(ServiceLocatorInterface $services)
+    {
+        return $this($services);
     }
 }

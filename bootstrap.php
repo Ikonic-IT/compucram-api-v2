@@ -58,16 +58,17 @@ $app->before(function(Request $request) use ($app, $serviceManager) {
 
         // load user from token to validate
         $user = $serviceManager->get('userRepository')->findOneByToken($_GET['token']);
-
+       // $user->show();
+        //$sr = serialize($user);
+        //echo $sr; exit;
         if (empty($user)) {
             throw new \Exception("Invalid token specified.", 401);
         }
 
         // store authenticated user with roles/permissions
-        $serviceManager
-            ->setAllowOverride(true)
-            ->setService('user', $user)
-            ->setAllowOverride(false);
+        $serviceManager ->setAllowOverride(true);
+        $serviceManager ->setService('user', $user);
+        $serviceManager ->setAllowOverride(false);
 
         // remove token
         unset($_GET['token']);

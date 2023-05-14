@@ -7,7 +7,7 @@ use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Permissions\Rbac\Rbac as LaminasRbac;
 use Laminas\Permissions\Rbac\Role;
 use Hondros\Api\Model\Entity;
-
+use Interop\Container\ContainerInterface;
 class RbacFactory implements FactoryInterface
 {
     /**
@@ -15,7 +15,7 @@ class RbacFactory implements FactoryInterface
      * @param ServiceLocatorInterface $serviceLocator
      * @return LaminasRbac
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         // setup class and roles
         $rbac = new LaminasRbac();
@@ -71,5 +71,9 @@ class RbacFactory implements FactoryInterface
         $rbac->addRole($guestRole);
 
         return $rbac;
+    }
+    public function createService(ServiceLocatorInterface $services)
+    {
+        return $this($services);
     }
 }
