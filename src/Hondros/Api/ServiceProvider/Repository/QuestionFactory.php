@@ -2,9 +2,13 @@
 
 namespace Hondros\Api\ServiceProvider\Repository;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+//use Laminas\ServiceManager\FactoryInterface;
+//use Laminas\ServiceManager\ServiceLocatorInterface;
 use Hondros\Api\Model\Repository;
+
+use Hondros\Api\Service;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 class QuestionFactory implements FactoryInterface
 {
@@ -14,19 +18,23 @@ class QuestionFactory implements FactoryInterface
      * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return \Hondros\Api\Model\Repository\Question
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $em = $serviceLocator->get('entityManager');
+        $em = $container->get('entityManager');
         
         return new Repository\Question(
             $em,
             $em->getClassMetadata('Hondros\Api\Model\Entity\Question'),
-            $serviceLocator->get('logger'),
-            $serviceLocator->get('redis'),
-            $serviceLocator->get('config'),
-            $serviceLocator->get('questionHydratorStrategy'),
-            $serviceLocator->get('answerHydratorStrategy'),
-            $serviceLocator->get('questionBankRepository')
+            $container->get('logger'),
+            $container->get('redis'),
+            $container->get('config'),
+            $container->get('questionHydratorStrategy'),
+            $container->get('answerHydratorStrategy'),
+            $container->get('questionBankRepository')
         );
+    }
+    public function createService(ServiceLocatorInterface $services)
+    {
+        return $this($services);
     }
 }

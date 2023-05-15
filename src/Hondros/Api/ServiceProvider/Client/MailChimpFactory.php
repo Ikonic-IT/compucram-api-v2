@@ -2,15 +2,18 @@
 
 namespace Hondros\Api\ServiceProvider\Client;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+//use Laminas\ServiceManager\FactoryInterface;
+//use Laminas\ServiceManager\ServiceLocatorInterface;
 use Hondros\Api\Client;
+use Hondros\Api\Service;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
 
 class MailChimpFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $config = $serviceLocator->get('config')->mailChimp;
+        $config = $container->get('config')->mailChimp;
         $client = new \GuzzleHttp\Client([
             'base_uri' => $config->uri,
             'auth' => [
@@ -20,7 +23,11 @@ class MailChimpFactory implements FactoryInterface
         ]);
 
         return new Client\MailChimp($client,
-            $serviceLocator->get('logger'));
+            $container->get('logger'));
 
+    }
+    public function createService(ServiceLocatorInterface $services)
+    {
+        return $this($services);
     }
 }

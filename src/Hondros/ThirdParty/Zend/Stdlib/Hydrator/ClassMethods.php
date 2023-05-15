@@ -16,18 +16,18 @@ class ClassMethods extends ZendClassMethods
      */
     public function extract(object $object): array
     {
+        
         // track the hash of each object so we don't try and load it twice
         // to prevent a loop
         //$hash = spl_object_hash($object);
-        
+        $data = [];
         // doctrine has proxies when the entity is not loaded, we can ignore those
         if ((method_exists($object, '__isInitialized') && $object->__isInitialized() == false)
             || get_class($object) == 'Doctrine\ORM\PersistentCollection' && !$object->isInitialized()) {
-            return null;
+            return $data;
         }
 
         if ($object instanceof \Doctrine\Common\Collections\ArrayCollection) {
-            $data = [];
             foreach ($object as $item) {
                 $data[] = parent::extract($item);
             }
