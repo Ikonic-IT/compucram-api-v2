@@ -2,9 +2,13 @@
 
 namespace Hondros\Api\ServiceProvider\Service;
 
-use Laminas\ServiceManager\FactoryInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
+//use Laminas\ServiceManager\FactoryInterface;
+//use Laminas\ServiceManager\ServiceLocatorInterface;
 use Hondros\Api\Service;
+
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Interop\Container\ContainerInterface;
+
 
 class ModuleAttemptQuestionFactory implements FactoryInterface
 {
@@ -14,13 +18,17 @@ class ModuleAttemptQuestionFactory implements FactoryInterface
      * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return \Hondros\Api\Service\ModuleAttemptQuestion
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
         return new Service\ModuleAttemptQuestion(
-            $serviceLocator->get('entityManager'),
-            $serviceLocator->get('logger'),
-            $serviceLocator->get('moduleAttemptQuestionRepository'),
-            $serviceLocator->get('progressQuestionRepository')
+            $container->get('entityManager'),
+            $container->get('logger'),
+            $container->get('moduleAttemptQuestionRepository'),
+            $container->get('progressQuestionRepository')
         );
+    }
+    public function createService(ServiceLocatorInterface $services)
+    {
+        return $this($services);
     }
 }
