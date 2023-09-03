@@ -2,12 +2,9 @@
 
 namespace Hondros\Api\ServiceProvider\Service;
 
-//use Laminas\ServiceManager\FactoryInterface;
-//use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 use Hondros\Api\Service;
-
-use Laminas\ServiceManager\Factory\FactoryInterface;
-use Interop\Container\ContainerInterface;
 
 class ModuleAttemptFactory implements FactoryInterface
 {
@@ -17,23 +14,19 @@ class ModuleAttemptFactory implements FactoryInterface
      * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return \Hondros\Api\Service\ModuleAttempt
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
         return new Service\ModuleAttempt(
-            $container->get('entityManager'),
-            $container->get('logger'),
-            $container->get('moduleAttemptRepository'),
-            $container->get('enrollmentRepository'),
-            $container->get('moduleRepository'),
-            $container->get('questionRepository'),
-            $container->get('progressRepository'),
-            $container->get('progressQuestionRepository'),
-			$container->get('moduleAttemptQuestionRepository'),
-			$container->get('progressService')
+            $serviceLocator->get('entityManager'),
+            $serviceLocator->get('logger'),
+            $serviceLocator->get('moduleAttemptRepository'),
+            $serviceLocator->get('enrollmentRepository'),
+            $serviceLocator->get('moduleRepository'),
+            $serviceLocator->get('questionRepository'),
+            $serviceLocator->get('progressRepository'),
+            $serviceLocator->get('progressQuestionRepository'),
+			$serviceLocator->get('moduleAttemptQuestionRepository'),
+			$serviceLocator->get('progressService')
         );
-    }
-    public function createService(ServiceLocatorInterface $services)
-    {
-        return $this($services);
     }
 }

@@ -31,6 +31,25 @@ class Auth implements ControllerProviderInterface
     {
         $controllers = $app['controllers_factory'];
         
+        /**
+         * @OA\Post(
+         *     path="/auth/login",
+         *     summary="Get a user login",
+         *     description="Returns  user details",
+         *     @OA\Response(
+         *         response=200,
+         *         description="Successful operation",
+         *         @OA\JsonContent(
+         *             type="array",
+         *             @OA\Items(ref="#/Hondros/Api/Model/Listener/User")
+         *         )
+         *     ),
+         *     @OA\Response(
+         *         response=401,
+         *         description="Unauthorized"
+         *     ),
+         * )
+         */
         $controllers->post('/auth/login', function () {
             $email = !empty($_POST['email']) ? trim($_POST['email']) : null;
 

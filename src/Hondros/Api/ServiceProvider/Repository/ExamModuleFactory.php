@@ -6,9 +6,6 @@ use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Hondros\Api\Model\Repository;
 
-use Interop\Container\ContainerInterface;
-
-
 class ExamModuleFactory implements FactoryInterface
 {
     /**
@@ -17,20 +14,16 @@ class ExamModuleFactory implements FactoryInterface
      * @param \Laminas\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return \Hondros\Api\Model\Repository\Exam
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $em = $container->get('entityManager');
+        $em = $serviceLocator->get('entityManager');
         
         return new Repository\ExamModule(
             $em,
             $em->getClassMetadata('Hondros\Api\Model\Entity\ExamModule'),
-            $container->get('logger'),
-            $container->get('redis'),
-            $container->get('config')
+            $serviceLocator->get('logger'),
+            $serviceLocator->get('redis'),
+            $serviceLocator->get('config')
         );
-    }
-    public function createService(ServiceLocatorInterface $services)
-    {
-        return $this($services);
     }
 }
